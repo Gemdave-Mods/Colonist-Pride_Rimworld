@@ -3,7 +3,7 @@
   <name>Colonist Pride</name>
   <author>Gemdave</author>
   <packageId>Gemdave.colonistpride</packageId>
-  <url>https://github.com/Gemdave/ColonistPride</url>
+  <url>https://github.com/Gemdave-Mods/Colonist-Pride_Rimworld</url>
 
   <supportedVersions>
     <li>1.6</li>
@@ -13,11 +13,13 @@
 
 Colonist Pride adds mood effects tied to the quality of items your colonists craft:
 
-- Pride: crafting an Excellent, Masterwork, or Legendary item gives the maker a mood boost, scaling with quality.
-- Heartbreak: losing a high-quality item the pawn once made brings a mood penalty.
-- Relief: losing low-quality item they made brings a small mood boost. After all no one misses their worst work.
+- Pride: Colonists will be given a mood boost when they create high quality items  
+- Shame: Colonists will receive a mood negative when they create items of low quality  
+- Heartbreak: Colonists will receive a mood negative when a high quality item that they created gets destroyed  
+- Relief: Colonists will be given a small mood boost when low quality items they created gets destroyed
+- Other colonists will think more highly of colonists who churn out high quality items  
+- Fully adjustable in the settings  
 
-Only affects items still owned by the colony, made by pawns still with you.
 
 Requires Harmony.</description>
 

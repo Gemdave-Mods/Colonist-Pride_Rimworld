@@ -1,0 +1,42 @@
+name: Package mod
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    env:
+      MOD_NAME: Colonist-Pride_Rimworld
+      FOLDERS: "About Assemblies Defs"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Copy folders to Deploy
+        run: |
+          mkdir -p "Deploy/Colonist Pride"
+          for folder in $FOLDERS; do
+            if [ -d "$folder" ]; then
+              cp -r "$folder" "Deploy/Colonist Pride/"
+            else
+              echo "::warning::Folder '$folder' not found, skipping"
+            fi
+          done
+
+      - name: Verify the DLL is included
+        run: |
+          if [ ! -f "Deploy/$MOD_NAME/Assemblies/1.6/ColonistPride.dll" ]; then
+            echo "::error::Assemblies/1.6/ColonistPride.dll is missing. Build it locally and commit it."
+            exit 1
+          fi
+
+      - name: Upload Deploy folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.MOD_NAME }}
+          path: Deploy

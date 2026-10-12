@@ -37,5 +37,30 @@ namespace ColonistPride
                 ColonistPrideUtility.TryGiveMemory(worker, ReactionType.Pride, quality);
             }
         }
+
+        /*---------- Called from the Thing.Destroy prefix, while the item is still spawned/held. ----------*/
+        public static void OnDestroying(Thing thing, DestroyMode mode)
+        {
+            var withComps = thing as ThingWithComps;
+            if (withComps == null || thing.Destroyed)
+                return;
+
+            var tag = withComps.GetComp<CompColonistPrideTag>();
+            if (tag == null || !tag.labelled)
+                return;
+
+            Pawn maker = tag.maker;
+            if (!ColonistPrideUtility.IsEligibleMaker(maker))
+                return;
+
+            if (!ColonistPrideUtility.TryGetDestroyReaction(mode, tag.quality, tag.isArt, out ReactionType type))
+                return;
+
+            /*----- Checked last because it's the heaviest test -----*/
+            if (!ColonistPrideUtility.IsInColonyPossession(thing))
+                return;
+
+            ColonistPrideUtility.TryGiveMemory(maker, type, tag.quality);
+        }
     }
 }

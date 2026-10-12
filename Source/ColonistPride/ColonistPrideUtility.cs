@@ -89,6 +89,61 @@ namespace ColonistPride
             return true;
         }
 
+        /*---------- Maps a destroy mode + the item's label to a reaction, per the locked DestroyMode rules:
+        Vanish / KillFinalize / KillFinalizeLeavingsOnly count normally;
+        Deconstruct / Refund give Heartbreak only for Legendary (Relief still applies to Poor/Awful);
+        everything else (QuestLogic, WillReplace, FailConstruction, Cancel) is excluded. ----------*/
+        public static bool TryGetDestroyReaction(DestroyMode mode, QualityCategory quality, bool isArt, out ReactionType type)
+        {
+            type = ReactionType.Heartbreak;
+
+            bool normal = mode == DestroyMode.Vanish
+                          || mode == DestroyMode.KillFinalize
+                          || mode == DestroyMode.KillFinalizeLeavingsOnly;
+            bool gated = mode == DestroyMode.Deconstruct || mode == DestroyMode.Refund;
+            if (!normal && !gated)
+                return false;
+
+            if (quality == QualityCategory.Poor || quality == QualityCategory.Awful)
+            {
+                type = ReactionType.Relief;
+                return Qualifies(ReactionType.Relief, quality, isArt);
+            }
+
+            if (gated && quality != QualityCategory.Legendary)
+                return false;
+
+            type = ReactionType.Heartbreak;
+            return Qualifies(ReactionType.Heartbreak, quality, isArt);
+        }
+
+        /*---------- Is this item still in the colony's possession? Spawned items count on player-home maps; 
+        held items count when the holder chain leads to a colony-owned pawn (incl. prisoners/slaves), a player caravan, 
+        or a spawned holder on a player-home map. Items in transit (no holder, not spawned), e.g. sold/gifted stock, do not count. ----------*/
+        public static bool IsInColonyPossession(Thing thing)
+        {
+            if (thing == null)
+                return false;
+            if (thing.Spawned)
+                return thing.Map != null && thing.Map.IsPlayerHome;
+
+            IThingHolder holder = thing.ParentHolder;
+            for (int depth = 0; holder != null && depth < 24; depth++)
+            {
+                if (holder is Pawn pawn)
+                    return pawn.Faction == Faction.OfPlayer || pawn.HostFaction == Faction.OfPlayer;
+                if (holder is Caravan caravan)
+                    return caravan.IsPlayerControlled;
+                if (holder is Map map)
+                    return map.IsPlayerHome;
+                if (holder is Thing holderThing && holderThing.Spawned)
+                    return holderThing.Map != null && holderThing.Map.IsPlayerHome;
+
+                holder = holder.ParentHolder;
+            }
+            return false;
+        }
+
         /*---------- Pushes the max-stack settings onto the live ThoughtDefs. ----------*/
         public static void ApplyStackLimits()
         {

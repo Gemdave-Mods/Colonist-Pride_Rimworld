@@ -5,11 +5,9 @@
     <AssemblyName>ColonistPride</AssemblyName>
     <RootNamespace>ColonistPride</RootNamespace>
     <LangVersion>9.0</LangVersion>
-    <OutputPath>..\..\Assemblies\</OutputPath>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DebugType>none</DebugType>
-    <RimWorldManaged>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\</RimWorldManaged>
+    <RimWorldManaged>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\</RimWorldManaged>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,5 +29,9 @@
     </Reference>
     <PackageReference Include="Lib.Harmony" Version="2.3.3" ExcludeAssets="runtime" />
   </ItemGroup>
+	<Target Name="CopyToAssemblies" AfterTargets="Build">
+		<MakeDir Directories="$(MSBuildProjectDirectory)\..\..\Assemblies" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(MSBuildProjectDirectory)\..\..\Assemblies" />
+	</Target>
 
 </Project>

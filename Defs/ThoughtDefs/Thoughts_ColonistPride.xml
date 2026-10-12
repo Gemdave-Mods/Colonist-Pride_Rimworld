@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<!-- Pride -->
+  <ThoughtDef>
+    <defName>ColonistPride_Pride</defName>
+    <thoughtClass>ColonistPride.Thought_TierMemory</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+		  <!-- Excellent -->
+        <label>proud of an excellent creation</label>
+        <description>I made something truly fine. It feels good.</description>
+        <baseMoodEffect>2</baseMoodEffect>
+      </li>
+      <li>
+		  <!-- Masterwork -->
+        <label>proud of a masterwork creation</label>
+        <description>I created a masterwork. I won't forget this for a while.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+      <li>
+		  <!-- Legendary -->
+        <label>proud of a legendary creation</label>
+        <description>I made something legendary. This is the pinnacle of my craft.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- Heartbreak -->
+  <ThoughtDef>
+    <defName>ColonistPride_Heartbreak</defName>
+    <thoughtClass>ColonistPride.Thought_TierMemory</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+		  <!-- Excellent -->
+        <label>heartbroken over a lost excellent creation</label>
+        <description>Something fine that I made is gone.</description>
+        <baseMoodEffect>-2</baseMoodEffect>
+      </li>
+      <li>
+		  <!-- Masterwork -->
+        <label>heartbroken over a lost masterwork</label>
+        <description>A masterwork I created has been destroyed.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+      <li>
+		  <!-- Legendary -->
+        <label>heartbroken over a lost legendary creation</label>
+        <description>A legendary work of mine is gone forever.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+	<!-- Relief -->
+  <ThoughtDef>
+    <defName>ColonistPride_Relief</defName>
+    <thoughtClass>ColonistPride.Thought_TierMemory</thoughtClass>
+    <durationDays>1</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+		  <!-- Poor -->
+        <label>relieved a poor creation is gone</label>
+        <description>I'm not sorry to see that shoddy thing of mine go.</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+      <li>
+		  <!-- Awful -->
+        <label>relieved an awful creation is gone</label>
+        <description>Good riddance. That thing was an embarrassment.</description>
+        <baseMoodEffect>2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>

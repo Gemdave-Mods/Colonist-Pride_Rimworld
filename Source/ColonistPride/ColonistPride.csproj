@@ -30,8 +30,8 @@
     <PackageReference Include="Lib.Harmony" Version="2.3.3" ExcludeAssets="runtime" />
   </ItemGroup>
 	<Target Name="CopyToAssemblies" AfterTargets="Build">
-		<MakeDir Directories="$(MSBuildProjectDirectory)\..\..\Assemblies" />
-		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(MSBuildProjectDirectory)\..\..\Assemblies" />
+		<MakeDir Directories="$(MSBuildProjectDirectory)\..\..\1.6" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(MSBuildProjectDirectory)\..\..\1.6" />
 	</Target>
 
 </Project>

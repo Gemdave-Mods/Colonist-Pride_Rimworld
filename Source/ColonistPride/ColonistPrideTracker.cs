@@ -42,25 +42,24 @@ namespace ColonistPride
         public static void OnDestroying(Thing thing, DestroyMode mode)
         {
             var withComps = thing as ThingWithComps;
-            if (withComps == null || thing.Destroyed)
-                return;
+            if (withComps == null || thing.Destroyed) return;
 
             var tag = withComps.GetComp<CompColonistPrideTag>();
-            if (tag == null || !tag.labelled)
-                return;
+            if (tag == null || !tag.labelled) return;
 
             Pawn maker = tag.maker;
-            if (!ColonistPrideUtility.IsEligibleMaker(maker))
-                return;
+            if (!ColonistPrideUtility.IsEligibleMaker(maker)) return;
 
-            if (!ColonistPrideUtility.TryGetDestroyReaction(mode, tag.quality, tag.isArt, out ReactionType type))
-                return;
+            // Use the item's quality right now; the tag's stored quality is only the creation-time value
+            var qualityComp = withComps.GetComp<CompQuality>();
+            QualityCategory currentQuality = qualityComp != null ? qualityComp.Quality : tag.quality;
 
-            /*----- Checked last because it's the heaviest test -----*/
-            if (!ColonistPrideUtility.IsInColonyPossession(thing))
-                return;
+            if (!ColonistPrideUtility.TryGetDestroyReaction(mode, currentQuality, tag.isArt, out ReactionType type)) return;
 
-            ColonistPrideUtility.TryGiveMemory(maker, type, tag.quality);
+            // Checked last because it's the heaviest test
+            if (!ColonistPrideUtility.IsInColonyPossession(thing)) return;
+
+            ColonistPrideUtility.TryGiveMemory(maker, type, currentQuality);
         }
     }
 }

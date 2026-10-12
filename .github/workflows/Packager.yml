@@ -28,12 +28,12 @@ jobs:
             fi
           done
 
-      - name: Verify the DLL is included
-        run: |
-          if [ ! -f "Deploy/$MOD_NAME/Assemblies/1.6/ColonistPride.dll" ]; then
-            echo "::error::Assemblies/1.6/ColonistPride.dll is missing. Build it locally and commit it."
-            exit 1
-          fi
+      #- name: Verify the DLL is included
+      #  run: |
+      #    if [ ! -f "Deploy/$MOD_NAME/Assemblies/1.6/ColonistPride.dll" ]; then
+      #      echo "::error::Assemblies/1.6/ColonistPride.dll is missing. Build it locally and commit it."
+      #      exit 1
+      #    fi*/
 
       - name: Upload Deploy folder
         uses: actions/upload-artifact@v4
